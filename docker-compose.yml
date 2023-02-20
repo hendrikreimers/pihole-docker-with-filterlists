@@ -1,0 +1,76 @@
+version: "3.9"
+
+networks:
+  pihole_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.18.0.0/16
+
+services:
+  pihole-lists:
+    image: hendrikreimers/pihole-lists
+    container_name: pihole-lists
+    build:
+      context: templates/pihole-lists
+      dockerfile: Dockerfile
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+    restart: unless-stopped
+    networks:
+      pihole_network:
+        ipv4_address: 172.18.0.3
+
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    depends_on:
+      - pihole-lists
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      #- "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
+      - "80:80/tcp"
+      - "443:443/tcp"
+    environment:
+      TZ: "Europe/Berlin"
+      #WEBPASSWORD: "password"
+      #PROXY_LOCATION: "pihole" # Server Hostname
+      #VIRTUAL_HOST: "pihole" # Server Hostname
+      VIRTUAL_PORT: '80'
+      #INTERFACE: "eth0"
+      #FTLCONF_LOCAL_IPV4: "192.168.64.35" # Server IP
+      #FTLCONF_LOCAL_IPV6: "2a00:6020:498c:6400:a00:27ff:fee6:67bc" # Server IP
+      IPv6: "true"
+      WEBTHEME: "default-auto"
+      REV_SERVER: "true"
+      #REV_SERVER_CIDR: "192.168.64.0/24" # Network
+      #REV_SERVER_TARGET: "192.168.64.1" # Router IP
+      #REV_SERVER_DOMAIN: "fritz.box" # Router Hostname
+      PIHOLE_DNS_: "8.8.8.8;8.8.4.4;2001:4860:4860:0:0:0:0:8888;2001:4860:4860:0:0:0:0:8844;9.9.9.9;149.112.112.112;2620:fe::fe;2620:fe::9;9.9.9.11;149.112.112.11;2620:fe::11;2620:fe::fe:11;1.1.1.1;1.0.0.1;2606:4700:4700::1111;2606:4700:4700::1001"
+      QUERY_LOGGING: "false"
+      DNSSEC: "true"
+      DNS_FQDN_REQUIRED: "true"
+      DNS_BOGUS_PRIV: "true"
+      DNSMASQ_LISTENING: "all"
+      FTLCONF_BLOCK_ICLOUD_PR: "true"
+      FTLCONF_PRIVACYLEVEL: "3"
+      FTLCONF_RESOLVE_IPV6: "true"
+      FTLCONF_RESOLVE_IPV4: "true"
+    volumes:
+      - './etc-pihole:/etc/pihole'
+      - './etc-dnsmasq.d:/etc/dnsmasq.d'
+      #- './pihole-logs:/var/log/pihole'
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+      - net.ipv6.conf.default.disable_ipv6=0
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 9.9.9.9
+    dns_search: ''
+    networks:
+      pihole_network:
+        ipv4_address: 172.18.0.5
+
