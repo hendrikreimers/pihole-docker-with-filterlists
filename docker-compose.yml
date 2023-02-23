@@ -73,4 +73,3 @@ services:
     networks:
       pihole_network:
         ipv4_address: 172.18.0.5
-
