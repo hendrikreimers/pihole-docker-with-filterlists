@@ -9,8 +9,8 @@ RUNNING_PIHOLE=`docker container ls -f "name=pihole" -q`
 RUNNING_PILISTS=`docker container ls -f "name=pihole-lists" -q`
 
 if [ ! -z "$RUNNING_PILISTS" ] && [ ! -z "$RUNNING_PIHOLE" ]; then
-    docker exec -t pihole-lists /bin/sh -c 'cd $list_path && git pull'
-    docker exec -t pihole-lists /bin/sh -c '/bin/sh $list_path/run.sh'
+    docker exec -t pihole-lists /bin/sh -c 'cd $list_path && git pull > /var/www/localhost/htdocs/logs/last_git.log'
+    docker exec -t pihole-lists /bin/sh -c '/bin/sh $list_path/run.sh > /var/www/localhost/htdocs/logs/last_listupdates.log'
     
     docker exec -t pihole /bin/sh -c 'wget http://172.18.0.3:8080/pihole-unique-filterlist-creator/dist/_whitelist.txt -O /etc/pihole/whitelist.txt -q > /dev/null'
     docker exec -t pihole /bin/sh -c 'PATH="$PATH:/usr/sbin:/usr/local/bin/" pihole updateGravity'

@@ -7,4 +7,4 @@ cd ..
 docker compose down
 docker pull pihole/pihole
 
-$SCRIPTPATH/start.sh
+$SCRIPTPATH/up.sh

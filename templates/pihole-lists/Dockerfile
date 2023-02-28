@@ -22,6 +22,7 @@ RUN apk add --update --no-cache git
 RUN cd $base_path && git clone $git_list_repository
 RUN cd $list_path && sh install.sh
 RUN cd $list_path && sh $list_path/run.sh
+RUN mkdir $base_path/logs
 RUN chown lighttpd:lighttpd -Rf $list_path/dist
 
 # Cleanup
@@ -32,8 +33,8 @@ COPY etc/lighttpd/* /etc/lighttpd/
 COPY var/www/localhost/htdocs/* $base_path
 
 # Enable cronjobs
-RUN echo "30 0 1 * * cd $list_path && git pull >/dev/null 2>&1" >> /var/spool/cron/crontabs/root
-RUN echo "30 1 1 * * /usr/bin/sh $list_path/run.sh >/dev/null 2>&1" >> /var/spool/cron/crontabs/root
+RUN echo "30 13 27 * * cd $list_path && git pull > /var/www/localhost/htdocs/logs/last_git.log" >> /var/spool/cron/crontabs/root
+RUN echo "30 15 27 * * /usr/bin/sh $list_path/run.sh > /var/www/localhost/htdocs/logs/last_listupdates.log" >> /var/spool/cron/crontabs/root
 
 # Expose HTTP Port
 EXPOSE 8080
