@@ -18,6 +18,8 @@ services:
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=0
     restart: unless-stopped
+    volumes:
+      - './logs-list:/var/www/localhost/htdocs/logs'
     networks:
       pihole_network:
         ipv4_address: 172.18.0.3
