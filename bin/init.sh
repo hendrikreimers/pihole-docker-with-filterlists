@@ -5,7 +5,7 @@ cd $SCRIPTPATH
 cd ..
 
 cd $SCRIPTPATH
-./start.sh
+./up.sh
 ./update-lists.sh
 
 docker builder prune -af
