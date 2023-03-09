@@ -12,6 +12,7 @@ chmod +x $SCRIPTPATH/bin/*.sh
 ./bin/03_setup-system.sh
 ./bin/04_setup-docker-compose.sh
 ./bin/05_pi-save-energy.sh
+./bin/reset.sh
 
 chmod -x $SELF
 

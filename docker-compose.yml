@@ -63,7 +63,7 @@ services:
     volumes:
       - './etc-pihole:/etc/pihole'
       - './etc-dnsmasq.d:/etc/dnsmasq.d'
-      #- './pihole-logs:/var/log/pihole'
+      - './logs-pihole:/var/log/pihole'
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=0
       - net.ipv6.conf.default.disable_ipv6=0
