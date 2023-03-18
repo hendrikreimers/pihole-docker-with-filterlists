@@ -114,6 +114,16 @@ No worries, edit the **docker-compose.override.yml** to change it. After that re
 
       # ./bin/stop.sh
       # ./bin/start.sh
+
+### DNS not reachable anymore ###
+
+It worked for some time and then stopped, but pihole admin site is still reachable!
+
+It's an IPv6 thing ;-)
+
+Sometimes the IPv6 Address which is reachable to your pihole changed in your Router, 
+check the IPv6 address for the pihole again on your router  and then change the DNS address to the 
+current pihole ipv6 address. Usually you don't have to change that Address in the pihole, only router!
       
 ## Configuration Files ##
 
