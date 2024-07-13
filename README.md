@@ -63,7 +63,7 @@ This Package will not setup a DHCP Server. For best use-case you can use your DH
 
        # apt update
        # apt install git
-       # git checkout https://github.com/hendrikreimers/pihole-docker-with-filterlists.git
+       # git clone https://github.com/hendrikreimers/pihole-docker-with-filterlists.git
 4. Change ownership and make Setup Script executable
 
        # chown -R root:root ./pihole-docker-with-filterlists
