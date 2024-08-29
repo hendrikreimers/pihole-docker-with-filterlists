@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.18.6
 MAINTAINER Hendrik Reimers at https://github.com/hendrikreimers/docker-pihole
 
 # Variables
