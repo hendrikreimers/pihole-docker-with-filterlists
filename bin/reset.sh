@@ -15,6 +15,7 @@ rm -Rf $SCRIPTPATH/../logs-pihole/*
 
 cp $SCRIPTPATH/../templates/etc-pihole/* $SCRIPTPATH/../etc-pihole/
 cp $SCRIPTPATH/../templates/etc-dnsmasq.d/* $SCRIPTPATH/../etc-dnsmasq.d/
+cp $SCRIPTPATH/../templates/etc-unbound/* $SCRIPTPATH/../etc-unbound/
 
 DIR="$SCRIPTPATH/../_custom"
 if [ -d "$DIR" ]; then

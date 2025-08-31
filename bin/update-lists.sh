@@ -20,6 +20,9 @@ if [ ! -z "$RUNNING_PILISTS" ] && [ ! -z "$RUNNING_PIHOLE" ]; then
     docker exec -t pihole /bin/sh -c 'PATH="$PATH:/usr/sbin:/usr/local/bin/" pihole updateGravity'
     echo "Updating alternate lists..."
     docker exec -t pihole /bin/sh -c 'export URL_DOMAIN="172.18.0.3:8080/pihole-unique-filterlist-creator" && curl -sSLf http://172.18.0.3:8080/pihole-unique-filterlist-creator/dist/pihole-update-static-lists.sh | sed --expression="s/https:/http:/g" | bash'
+    echo "Updating unbound root hints..."
+    docker exec -t unbound sh -c 'wget -qO /etc/unbound/root.hints https://www.internic.net/domain/named.root'
+    docker exec unbound unbound-control reload 2>/dev/null || docker kill -s HUP unbound
 else
     echo "System not running!"
 fi
