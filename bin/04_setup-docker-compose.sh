@@ -13,7 +13,7 @@ services:
     hostname: "${HOSTNAME}"
     
     environment:
-      WEBPASSWORD: "${PASSWORD}"
+      FTLCONF_webserver_api_password: "${PASSWORD}"
       
       PROXY_LOCATION: "${HOSTNAME}" # Server Hostname
       VIRTUAL_HOST: "${HOSTNAME}" # Server Hostname
