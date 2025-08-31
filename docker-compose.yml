@@ -38,9 +38,11 @@ services:
     networks:
       pihole_network:
         ipv4_address: 172.18.0.4
-    ports:
-      - "5335:5335/tcp"
-      - "5335:5335/udp"
+    # The port does not have to be released to the outside,
+    # it is practical for tests - therefore optional:
+    #ports:
+    #  - "5335:5335/tcp"
+    #  - "5335:5335/udp"
     volumes:
       - './etc-unbound:/etc/unbound/custom.conf.d'
 
@@ -58,19 +60,34 @@ services:
       - "443:443/tcp"
     environment:
       TZ: "Europe/Berlin"
+      #WEBPASSWORD: "password"
+      #PROXY_LOCATION: "pihole" # Server Hostname
+      #VIRTUAL_HOST: "pihole" # Server Hostname
       VIRTUAL_PORT: '80'
+      #INTERFACE: "eth0"
+      #FTLCONF_LOCAL_IPV4: "192.168.64.35" # Server IP
+      #FTLCONF_LOCAL_IPV6: "2a00:6020:498c:6400:a00:27ff:fee6:67bc" # Server IP
       IPv6: "true"
-      FTLCONF_webserver_interface_theme: "default-auto"
+      WEBTHEME: "default-auto"
+      REV_SERVER: "true"
+      #REV_SERVER_CIDR: "192.168.64.0/24" # Network
+      #REV_SERVER_TARGET: "192.168.64.1" # Router IP
+      #REV_SERVER_DOMAIN: "fritz.box" # Router Hostname
+      PIHOLE_DNS_: "172.18.0.4#5335"
       FTLCONF_dns_upstreams: "unbound#5335"
+      FTLCONF_dns_listeningMode: "all"
       FTLCONF_dns_dnssec: "false"
       #PIHOLE_DNS_: "86.54.11.11;2a13:1001::86:54:11:11;8.8.8.8;8.8.4.4;2001:4860:4860:0:0:0:0:8888;2001:4860:4860:0:0:0:0:8844;9.9.9.9;149.112.112.112;2620:fe::fe;2620:fe::9;9.9.9.11;149.112.112.11;2620:fe::11;2620:fe::fe:11;1.1.1.1;1.0.0.1;2606:4700:4700::1111;2606:4700:4700::1001"
-      FTLCONF_dns_queryLogging: "false"
-      FTLCONF_dns_domainNeeded: "true"
-      FTLCONF_dns_bogusPriv: "true"
-      FTLCONF_dns_listeningMode: "all"
-      FTLCONF_dns_specialDomains_iCloudPrivateRelay: "true"
-      FTLCONF_misc_privacylevel: "3"
-      FTLCONF_misc_etc_dnsmasq_d: "true"
+      QUERY_LOGGING: "false"
+      #DNSSEC: "true"
+      DNSSEC: "false"
+      DNS_FQDN_REQUIRED: "true"
+      DNS_BOGUS_PRIV: "true"
+      DNSMASQ_LISTENING: "all"
+      FTLCONF_BLOCK_ICLOUD_PR: "true"
+      FTLCONF_PRIVACYLEVEL: "3"
+      FTLCONF_RESOLVE_IPV6: "true"
+      FTLCONF_RESOLVE_IPV4: "true"
     volumes:
       - './etc-pihole:/etc/pihole'
       - './etc-dnsmasq.d:/etc/dnsmasq.d'
