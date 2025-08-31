@@ -36,11 +36,9 @@ services:
     networks:
       pihole_network:
         ipv4_address: 172.18.0.4
-    # The port does not have to be released to the outside,
-    # it is practical for tests - therefore optional:
-    #ports:
-    #  - "5335:5335/tcp"
-    #  - "5335:5335/udp"
+    ports:
+      - "5335:5335/tcp"
+      - "5335:5335/udp"
     volumes:
       - './etc-unbound:/etc/unbound/custom.conf.d'
 
