@@ -22,7 +22,8 @@ services:
       FTLCONF_LOCAL_IPV4: "${IPV4}" # Server IP
       FTLCONF_LOCAL_IPV6: "${IPV6}" # Server IP
       
-      REV_SERVER_CIDR: "${ROUTER_NET}/24" # Network
-      REV_SERVER_TARGET: "${ROUTER_IPV4}" # Router IP
-      REV_SERVER_DOMAIN: "${ROUTER_HOST}" # Router Hostname
+      #REV_SERVER_CIDR: "${ROUTER_NET}/24" # Network
+      #REV_SERVER_TARGET: "${ROUTER_IPV4}" # Router IP
+      #REV_SERVER_DOMAIN: "${ROUTER_HOST}" # Router Hostname
+      FTLCONF_dns_revServers: "true,${ROUTER_NET}/24,${ROUTER_IPV4}#53,${ROUTER_HOST}"
 EOT
