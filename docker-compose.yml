@@ -70,6 +70,8 @@ services:
       FTLCONF_logs_queryLogging: "false"
       FTLCONF_logs_file: "false"
       FTLCONF_dns_specialDomains_iCloudPrivateRelay: "true"
+
+      FTLCONF_privacylevel: "3"
       FTLCONF_privacy_level: "3"
       FTLCONF_misc_privacylevel: "3"
 
